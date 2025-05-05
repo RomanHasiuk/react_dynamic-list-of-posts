@@ -93,10 +93,9 @@ export const App = () => {
     const newComment = {
       ...commentData,
       postId: selectedPostId,
-      id: Math.max(0, ...comments.map(c => c.id)) + 1,
     };
 
-    setComments(current => [...current, newComment]);
+    // setComments(current => [...current, newComment]);
 
     try {
       await new Promise(resolve => setTimeout(resolve, 300));
@@ -105,11 +104,8 @@ export const App = () => {
         newComment,
       );
 
-      setComments(current =>
-        current.map(c => (c.id === newComment.id ? commentFromServer : c)),
-      );
+      setComments(current => [...current, commentFromServer]);
     } catch {
-      setComments(current => current.filter(c => c.id !== newComment.id));
     } finally {
       setIsSubmittingComment(false);
     }
